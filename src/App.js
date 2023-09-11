@@ -1,5 +1,5 @@
 
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import './App.css';
 //import About from './components/About';
 import Navbar from './components/Navbar';
@@ -16,22 +16,12 @@ function App() {
       setMode ('light')
       }
   }
-  useEffect(() =>{
+  const showData = () =>{
   axios.get('https://gorest.co.in/public/v2/users')
   .then((res)=> setMyData(res.data));
-  }, [])
-  const showData = ()=> {
-    myData.map((post) => {
-      const { id, name, email, gender, status } = post;
-      return <div className="card" key={id}>
-        <h4>Name: {name}</h4>
-        <h4>Email: {email}</h4>
-        <h4>Gender: {gender}</h4>
-        <h4>Status: {status}</h4>
-    
-        </div>
-    })
   }
+  
+    
   return (
    <>
 
@@ -39,6 +29,18 @@ function App() {
 <div className="container my-3">
   <h1>Data</h1>
   <button type="button" className="btn btn-success"onClick={showData}>Fetch Data</button>
+  {myData&&myData.map((post) => {
+      const { id, name, email, gender, status } = post;
+      return (<div className="card" key={id}>
+        <h4>Name: {name}</h4>
+        <h4>Email: {email}</h4>
+        <h4>Gender: {gender}</h4>
+        <h4>Status: {status}</h4>
+    
+        </div>
+      )
+    })
+  }
 {/*<Textform heading="Enter The Text to analyze below"/>}
 {/*<About/>*/}
 </div>
