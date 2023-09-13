@@ -33,33 +33,13 @@ function App() {
       document.body.style.backgroundColor ='white';
       showAlert("Light mode has been enabled","success");
     }
-  }
-  //const showData = () =>{
-  //axios.get('https://gorest.co.in/public/v2/users')
-  //.then((res)=> setMyData(res.data));
-  //}
-  
-    
+  }  
   return (
    <>
 
 <Navbar title="TextUtils" AboutText="About TextUtils" mode={mode} toggleMode = {toggleMode}/>
 <Alert1 alert={alert}/>
 <div className="container my-3">
-  {/*<h1>Data</h1>
-  <button type="button" className="btn btn-success"onClick={showData}>Fetch Data</button>
-  {myData&&myData.map((post) => {
-      const { id, name, email, gender, status } = post;
-      return (<div className="card" key={id}>
-        <h4>Name: {name}</h4>
-        <h4>Email: {email}</h4>
-        <h4>Gender: {gender}</h4>
-        <h4>Status: {status}</h4>
-    
-        </div>
-      )
-    })
-  }*/}
 <Textform showAlert={showAlert} heading="Enter the text to analyze below" mode={mode}/>
 {/*<About/>*/}
 </div>
