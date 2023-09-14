@@ -1,49 +1,60 @@
 
 import { useState } from 'react';
 import './App.css';
-//import About from './components/About';
+import About from './components/About';
 import Navbar from './components/Navbar';
-//import Textform from './components/Textform';
-import axios from 'axios';
+import Textform from './components/Textform';
+import Alert1 from './components/Alert1';
+import {
+  
+  Routes,
+  Route, 
+  Link,
+  BrowserRouter,
+} from "react-router-dom";
+
+
 function App() {
-  const [mode, setMode] = useState('dark'); //wheather dark mode is enabled or not
-  const [myData, setMyData] = useState([])
-  const toggleMode = ()=> {
+  const [mode, setMode] = useState('light'); //wheather dark mode is enabled or not
+ const [alert, setAlert] = useState(null)
+
+ const showAlert =(message,type)=>{
+  setAlert({
+    msg:message,
+    type:type
+  })
+  setTimeout(() => {
+    setAlert(null);
+  }, 3000);
+ }
+
+ const toggleMode = ()=> {
       if(mode === 'light'){
       setMode('dark')
-      }
+      document.body.style.backgroundColor ='#042743';
+      showAlert("Dark mode has been enabled","success");
+      //learned to use setInterval() did not used as it wasn't that much of a use
+    }
       else{
       setMode ('light')
-      }
-  }
-  const showData = () =>{
-  axios.get('https://gorest.co.in/public/v2/users')
-  .then((res)=> setMyData(res.data));
-  }
-  
-    
+      document.body.style.backgroundColor ='white';
+      showAlert("Light mode has been enabled","success");
+    }
+  }  
   return (
    <>
-
+<BrowserRouter>
 <Navbar title="TextUtils" AboutText="About TextUtils" mode={mode} toggleMode = {toggleMode}/>
+<Alert1 alert={alert}/>
 <div className="container my-3">
-  <h1>Data</h1>
-  <button type="button" className="btn btn-success"onClick={showData}>Fetch Data</button>
-  {myData&&myData.map((post) => {
-      const { id, name, email, gender, status } = post;
-      return (<div className="card" key={id}>
-        <h4>Name: {name}</h4>
-        <h4>Email: {email}</h4>
-        <h4>Gender: {gender}</h4>
-        <h4>Status: {status}</h4>
-    
+<Routes>
+          <Route exact path="/about" element= {<About />}></Route>
+          <Route exact path="/" element = {<Textform showAlert={showAlert} heading="Enter the text to analyze below" mode={mode}/>}>
+          </Route>
+  </Routes>
         </div>
-      )
-    })
-  }
-{/*<Textform heading="Enter The Text to analyze below"/>}
-{/*<About/>*/}
-</div>
+</BrowserRouter>
+
    </>
   );
 }
